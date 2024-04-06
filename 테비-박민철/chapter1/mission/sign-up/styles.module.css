@@ -1,0 +1,76 @@
+.sign-up-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: gray;
+  display: grid;
+  place-content: center;
+}
+
+.sign-up {
+  display: grid;
+  place-items: center;
+  width: 30vw;
+  padding: 3vw;
+  gap: 3vw;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.sign-up h2,
+p {
+  margin: 0;
+}
+
+.sign-up small {
+  color: red;
+  visibility: none;
+}
+
+.sign-up input {
+  width: 24vw;
+  height: 2vw;
+}
+
+.sign-up button {
+  width: 16vw;
+  height: 3vw;
+}
+
+.modal-wrapper {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal {
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30vw;
+  padding: 1vw;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.close-button {
+  float: right;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+.close-button:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.close-button:active {
+  background-color: white;
+}
