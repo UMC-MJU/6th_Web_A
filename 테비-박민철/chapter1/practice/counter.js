@@ -3,11 +3,15 @@ const plusButton = document.querySelector("#plus-button");
 const minusButton = document.querySelector("#minus-button");
 
 const handleClickPlusButton = () => {
-  console.log("plus-button이 클릭됨");
+  let currentStatus = parseInt(counterStatus.innerHTML);
+  currentStatus += 1;
+  counterStatus.innerHTML = currentStatus;
 };
 
 const handleClickMinusButton = () => {
-  console.log("minus-button이 클릭됨");
+  let currentStatus = parseInt(counterStatus.innerHTML);
+  currentStatus -= 1;
+  counterStatus.innerHTML = currentStatus;
 };
 
 plusButton.addEventListener("click", handleClickPlusButton);
