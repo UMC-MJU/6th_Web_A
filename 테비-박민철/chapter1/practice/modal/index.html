@@ -3,17 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <title>UMC chapter1 practice</title>
+    <link rel="stylesheet" type="text/css" href="styles.module.css" />
   </head>
   <body>
-    <h1 id="title">안녕하세요!</h1>
-    <section>
+    <section id="modal-background" class="modal-background">
+      <h1 id="title">안녕하세요!</h1>
       <p id="content">내용내용내용</p>
-      <button id="open-modal-button" type="button">버튼 열기</button>
+      <button id="open-modal-button" type="button" class="open-button">
+        버튼 열기
+      </button>
     </section>
-    <div id="modal">
-      <p id="modal-main-text">안녕하세요</p>
-      <p id="modal-sub-text">모달 내용은 어쩌고 저쩌고..</p>
-      <button id="'close-modal-button" type="button">닫기</button>
+    <div id="modal-wrapper" class="modal-wrapper">
+      <div id="modal" class="modal">
+        <h2 id="modal-main-text">안녕하세요</h2>
+        <p id="modal-sub-text">모달 내용은 어쩌고 저쩌고..</p>
+        <button id="close-modal-button" class="close-button" type="button">
+          닫기
+        </button>
+      </div>
     </div>
     <script src="modal.js"></script>
   </body>
