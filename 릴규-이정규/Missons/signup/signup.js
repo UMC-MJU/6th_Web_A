@@ -40,7 +40,7 @@ function validateName() {
 }
 
 function validateEmail() {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // -> 정규표현식
   if (!emailInput.value || !regex.test(emailInput.value)) {
     updateValidationMessage(
       emailValidationMessage,
@@ -136,7 +136,7 @@ function validateConfirmPassword() {
 }
 
 function showModal() {
-  modal.style.display = "block";
+  modal.style.display = "flex";
 }
 
 function hideModal() {
