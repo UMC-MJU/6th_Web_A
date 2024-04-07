@@ -156,7 +156,7 @@ const handlePasswordValidate = () => {
       messageKey: "tooLong",
     },
     {
-      test: !passwordRegex.test(passwordCheckInput.value),
+      test: !passwordRegex.test(passwordInput.value),
       messageKey: "wrongPassword",
     },
   ];
