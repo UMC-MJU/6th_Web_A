@@ -18,13 +18,13 @@ const submitButton = document.getElementById("submitbutton");
 const modal = document.getElementById("myModal");
 const closeModalButton = document.querySelector(".closebutton");
 
-// 유효성 text문구 색상 변환
+// ***삼항연산자 색상반환
 function updateValidationMessage(element, message, isValid) {
   element.textContent = message;
   element.style.color = isValid ? "green" : "red";
 }
 
-// 이름 유효성 검사
+// 유효성 검사 PART
 function validateName() {
   const regex = /^[가-힣a-zA-Z]+$/;
   if (!nameInput.value || !regex.test(nameInput.value)) {
@@ -39,7 +39,6 @@ function validateName() {
   return true;
 }
 
-// 이메일 유효성 검사
 function validateEmail() {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailInput.value || !regex.test(emailInput.value)) {
@@ -58,9 +57,8 @@ function validateEmail() {
   return true;
 }
 
-// 나이 유효성 검사
 function validateAge() {
-  const age = parseFloat(ageInput.value); // 입력값을 실수로 변환
+  const age = parseFloat(ageInput.value);
   if (isNaN(age)) {
     updateValidationMessage(
       ageValidationMessage,
@@ -78,7 +76,6 @@ function validateAge() {
     return false;
   }
   if (!Number.isInteger(age)) {
-    // 입력값이 정수인지 확인
     updateValidationMessage(
       ageValidationMessage,
       "나이는 정수여야 합니다.",
@@ -102,7 +99,6 @@ function validateAge() {
   return true;
 }
 
-// 비밀번호 유효성 검사
 function validatePassword() {
   const regex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,12}$/;
@@ -122,7 +118,6 @@ function validatePassword() {
   return true;
 }
 
-// 비밀번호 확인 검사
 function validateConfirmPassword() {
   if (confirmPasswordInput.value !== passwordInput.value) {
     updateValidationMessage(
@@ -140,17 +135,15 @@ function validateConfirmPassword() {
   return true;
 }
 
-// 모달 창 표시
 function showModal() {
   modal.style.display = "block";
 }
 
-// 모달 창 숨기기
 function hideModal() {
   modal.style.display = "none";
 }
 
-// 모든 유효성 검사 통과 여부 확인
+// ***모든 유효성 검사 통과 여부 확인
 function validateForm() {
   return (
     validateName() &&
@@ -161,23 +154,21 @@ function validateForm() {
   );
 }
 
-// 입력 필드 변경 시 유효성 검사 및 제출 버튼 상태 업데이트
+// ***입력 필드 변경 시 유효성 검사 및 제출 버튼 상태 업데이트
 [nameInput, emailInput, ageInput, passwordInput, confirmPasswordInput].forEach(
-  (input) => {
-    input.addEventListener("input", () => {
+  function (input) {
+    input.addEventListener("input", function () {
       const isFormValid = validateForm();
       submitButton.disabled = !isFormValid;
     });
   }
 );
 
-// 제출 버튼 클릭 이벤트
-submitButton.addEventListener("click", (e) => {
-  e.preventDefault(); // 폼 자동 제출 방지
+submitButton.addEventListener("click", function (e) {
+  e.preventDefault(); // ***폼 자동제출 방지
   if (validateForm()) {
     showModal();
   }
 });
 
-// 모달 닫기 버튼 클릭 이벤트
 closeModalButton.addEventListener("click", hideModal);
