@@ -1,34 +1,27 @@
-import { useState } from "react";
-import "./App.css";
+import { Link } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const handleIncreaseButton = () => {
-    setCount((count) => count + 1);
-    console.log("increase 클릭 완료");
-  };
-
-  const handleDecreaseButton = () => {
-    setCount((count) => count - 1);
-    console.log("decrease 클릭 완료");
-  };
-
   return (
-    <>
-      <div className="count">
-        <h1>{count}</h1>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            handleIncreaseButton();
-          }}
-        >
-          +1
-        </button>
-        <button onClick={handleDecreaseButton}>-1</button>
-      </div>
-    </>
+    <div>
+      <h2>실습</h2>
+      <ol>
+        <li>
+          <Link to="/counter">Counter</Link>
+        </li>
+        <li>
+          <Link to="/modal">Modal</Link>
+        </li>
+      </ol>
+      <h2>미션</h2>
+      <ol>
+        <li>
+          <Link to="/todo-list">Todo List</Link>
+        </li>
+        <li>
+          <Link to="/movie-poster">Movie Poster</Link>
+        </li>
+      </ol>
+    </div>
   );
 }
 
