@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Wrapper = ({ children }) => {
@@ -11,5 +10,4 @@ const Wrapper = ({ children }) => {
   );
 };
 
-Wrapper.PropTypes = React.Element;
 export default Wrapper;

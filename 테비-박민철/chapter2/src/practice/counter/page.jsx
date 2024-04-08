@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Wrapper from "../../component/wrapper";
 
-function Counter() {
+function CounterPage() {
   const [count, setCount] = useState(0);
   const handleIncreaseButton = () => {
     setCount((count) => count + 1);
@@ -32,4 +32,4 @@ function Counter() {
   );
 }
 
-export default Counter;
+export default CounterPage;
