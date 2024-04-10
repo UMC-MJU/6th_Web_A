@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-const Wrapper = ({ children }) => {
+const Wrapper = ({ children, style }) => {
   return (
     <div>
       <Link to="/">돌아가기</Link>
-      <div>{children}</div>
+      <div style={{ ...style }}>{children}</div>
     </div>
   );
 };
