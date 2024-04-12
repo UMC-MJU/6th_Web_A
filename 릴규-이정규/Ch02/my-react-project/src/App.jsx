@@ -1,27 +1,30 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Modal from "./modal/Modal";
+import Counter from "./counter/Counter";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  const handleIncrease = () => {
-    console.log("버튼이 클릭되었습니다: +1");
-    setCount(count + 1);
-  };
-
-  const handleDecrease = () => {
-    console.log("버튼이 클릭되었습니다: -1");
-    setCount(count - 1);
-  };
-
   return (
-    <div>
-      <h1>{count}</h1>
-      <button onClick={handleIncrease}>+1</button>
-      <button onClick={handleDecrease}>-1</button>
-    </div>
+    <Router>
+      <div>
+        <h1>Welcome to My React Project</h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/modal">Modal Page</Link>
+            </li>
+            <li>
+              <Link to="/counter">Counter Page</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/modal" element={<Modal />} />
+          <Route path="/counter" element={<Counter />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
