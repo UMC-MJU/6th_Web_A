@@ -29,11 +29,15 @@ const TodoListPage = () => {
     }
   };
 
+  const onClick = (event) => {
+    handleAddTodoItem(event.target.value);
+    event.target.value = "";
+  };
+
   const handleKeyDown = (event) => {
-    if (event.isComposing || event.keyCode === 229) return;
-    if (event.key === "Enter" && event.target.value.trim() !== "") {
-      handleAddTodoItem(event.target.value);
-      event.target.value = "";
+    if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
+      event.preventDefault();
+      onClick(event);
     }
   };
 
@@ -50,8 +54,8 @@ const TodoListPage = () => {
         }}
       >
         <input
-          placeholder="UMC 스터디 계획을 작성해 보세요."
           onKeyDown={handleKeyDown}
+          placeholder="UMC 스터디 계획을 작성해 보세요."
         />
         <div
           style={{
