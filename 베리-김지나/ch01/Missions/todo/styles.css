@@ -1,0 +1,75 @@
+body {
+  background-color: rgb(176, 218, 255);
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-title {
+  width: 800px;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-content {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+#input {
+  width: 600px;
+  height: 40px;
+  border: 2px solid black;
+}
+
+#input::placeholder {
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.todo-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 450px;
+}
+.todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+}
+.whattodo {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.whattodo h3 {
+  border-bottom: 2px solid rgb(241, 240, 255);
+}
+.whatdid {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.whatdid h3 {
+  border-bottom: 2px solid rgb(241, 240, 255);
+}
