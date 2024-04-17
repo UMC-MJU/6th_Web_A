@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+}
+
+.modal-wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  width: 320px;
+  padding: 24px 16px;
+  border-radius: 4px;
+}
+
+.modal-title {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.btn-wrapper {
+  text-align: right;
+}
+
+.todo-list {
+  padding: 0;
+  background-color: #f4f8ff;
+  height: 100vh;
+}
+
+.todo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-title {
+  width: 800px;
+  border-bottom: 2px solid rgb(215, 215, 215);
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-content {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
+
+#input {
+  width: 600px;
+  height: 40px;
+  border: 2px solid black;
+}
+
+#input::placeholder {
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.contents-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 650px;
+}
+
+.todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+}
+
+.whattodo {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.whattodo h3 {
+  border-bottom: 2px solid rgb(215, 215, 215);
+}
+.whatdid {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.whatdid h3 {
+  border-bottom: 2px solid rgb(215, 215, 215);
+}
