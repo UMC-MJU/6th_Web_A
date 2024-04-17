@@ -8,7 +8,7 @@ const Modal = ({ onClose }) => {
         <p className="modal-content">모달 내용은 어쩌고 저쩌고...</p>
         <div className="btn-wrapper">
           <button id="close-btn" onClick={onClose}>
-            닫기
+            close
           </button>
         </div>
       </div>
