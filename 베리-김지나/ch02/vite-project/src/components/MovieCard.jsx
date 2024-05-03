@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MovieInfor from "./MovieInfor";
+import MovieInfo from "./MovieInfo";
 
 function MovieCard({ movie }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -15,9 +15,13 @@ function MovieCard({ movie }) {
           src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
           alt={movie.title}
         />
-        <h3>{movie.title}</h3>
+        <div className="description">
+          <span id="movie-title">{movie.title}</span>
+          <span id="movie-average">{movie.vote_average}</span>
+        </div>
+
         <div className="movie-info">
-          {isHovered && <MovieInfor movie={movie} />}
+          {isHovered && <MovieInfo movie={movie} />}
         </div>
       </div>
     </div>
