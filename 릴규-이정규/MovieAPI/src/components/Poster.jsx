@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledPoster = styled.div`
   border-radius: 10px;
@@ -68,28 +69,53 @@ const StyledPoster = styled.div`
   }
 `;
 
-const Poster = ({ title, poster_path, vote_average, overview, index }) => {
-  const [isHovered, setIsHovered] = useState(false); // hover 상태를 관리하는 상태 변수
-  const roundedRating = vote_average.toFixed(1); // 별점 반올림
+const Poster = ({ title, poster_path, vote_average, overview }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const roundedRating = vote_average.toFixed(1);
 
   return (
     <StyledPoster
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} />
+      <img
+        src={
+          poster_path
+            ? `https://image.tmdb.org/t/p/w500${poster_path}`
+            : "/path/to/default.jpg"
+        }
+        alt={title || "Default Title"}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "/path/to/default.jpg";
+        }}
+      />
       {isHovered && (
         <div className="overview">
-          <h2>{title}</h2>
-          <p>{overview}</p>
+          <h2>{title || "Default Title"}</h2>
+          <p>{overview || "No overview available."}</p>
         </div>
       )}
       <div className="info">
-        <h5>{title}</h5>
+        <h5>{title || "Default Title"}</h5>
         <span>{roundedRating}</span>
       </div>
     </StyledPoster>
   );
+};
+
+Poster.defaultProps = {
+  title: "Unknown Title",
+  poster_path: null,
+  vote_average: 0,
+  overview: "No overview available.",
+};
+
+Poster.propTypes = {
+  title: PropTypes.string,
+  poster_path: PropTypes.string,
+  vote_average: PropTypes.number,
+  overview: PropTypes.string,
 };
 
 export default Poster;

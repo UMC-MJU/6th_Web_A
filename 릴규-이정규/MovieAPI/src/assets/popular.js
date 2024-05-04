@@ -6,7 +6,7 @@ const options = {
   params: { language: "ko", page: "1" },
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${process.env.REACT_APP_MOVIE_DB_TOKEN}`,
+    Authorization: `Bearer ${import.meta.env.REACT_APP_MOVIE_DB_TOKEN}`,
   },
 };
 
