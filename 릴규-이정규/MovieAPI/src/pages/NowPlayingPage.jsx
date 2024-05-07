@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import Poster from "./Poster";
+import Poster from "../components/Poster";
 
 const Container = styled.div`
   display: flex;

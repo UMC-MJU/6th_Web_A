@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import Poster from "./Poster";
+import Poster from "../components/Poster";
 
 const Container = styled.div`
   display: flex;
@@ -10,14 +10,14 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const PopularPage = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
+const TopRatedPage = () => {
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
 
   useEffect(() => {
-    const fetchPopularMovies = async () => {
+    const fetchTopRatedMovies = async () => {
       try {
         const response = await axios.get(
-          "https://api.themoviedb.org/3/movie/popular",
+          "https://api.themoviedb.org/3/movie/top_rated",
           {
             params: {
               language: "ko",
@@ -30,18 +30,18 @@ const PopularPage = () => {
             },
           }
         );
-        setPopularMovies(response.data.results);
+        setTopRatedMovies(response.data.results);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchPopularMovies();
+    fetchTopRatedMovies();
   }, []);
 
   return (
     <Container>
-      {popularMovies.map((movie, index) => (
+      {topRatedMovies.map((movie, index) => (
         <Poster
           key={index}
           title={movie.title}
@@ -55,4 +55,4 @@ const PopularPage = () => {
   );
 };
 
-export default PopularPage;
+export default TopRatedPage;
