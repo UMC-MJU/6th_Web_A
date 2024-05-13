@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Body = styled.div`
-  border-radius: 8px;
-  height: 32vw;
+  border-radius: 8px 8px 0px 0px;
+  height: ${({ $isMainPage }) => ($isMainPage ? "24vw" : "32vw")};
   margin: 40px auto;
   aspect-ratio: 2/3;
   background-color: #cccccc;
@@ -46,17 +46,18 @@ const Poster = ({ element }) => {
   const navigate = useNavigate();
 
   const handleClickPoster = () =>
-    navigate(`${location.pathname}/${element.id}`, { state: { element } });
+    navigate(`${location.pathname}${element.id}`, { state: { element } });
 
+  const isMainPage = location.pathname === "/";
   return (
-    <Body onClick={handleClickPoster}>
+    <Body onClick={handleClickPoster} $isMainPage={isMainPage}>
       <Image src={`https://image.tmdb.org/t/p/w300${element.poster_path}`} />
       <Description>
         <Title>
           <span>{element.title}</span>
         </Title>
         <Rate>
-          <span>⭐️ {element.vote_average.toFixed(1)}</span>
+          <span>⭐️ {element.vote_average?.toFixed(1)}</span>
         </Rate>
       </Description>
     </Body>
