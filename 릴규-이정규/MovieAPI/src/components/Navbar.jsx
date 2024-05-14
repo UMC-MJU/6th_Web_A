@@ -23,10 +23,12 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none; /* 밑줄 제거 */
+  text-decoration: none;
 
   &:hover {
     font-weight: bold;
+    transform: scale(1.1);
+    color: yellow;
   }
 `;
 

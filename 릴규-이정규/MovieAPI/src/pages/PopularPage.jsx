@@ -1,8 +1,8 @@
-// PopularPage.jsx
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Poster from "../components/Poster";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +12,7 @@ const Container = styled.div`
 
 const PopularPage = () => {
   const [popularMovies, setPopularMovies] = useState([]);
+  const navigate = useNavigate(); // 네비게이션 훅 사용
 
   useEffect(() => {
     const fetchPopularMovies = async () => {
@@ -25,8 +26,7 @@ const PopularPage = () => {
             },
             headers: {
               accept: "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MWUwYWU5YjczMmQ5NmIxNmE0NTkyNjE4NzQzNDc4OCIsInN1YiI6IjY2MzFlY2U2YWQ1OWI1MDEyYjZjYTEzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jt-7nM-82bQY3V5PX-re8U2MWWA0XnJ51tBVTlcr1jQ",
+              Authorization: "Bearer YOUR_API_KEY",
             },
           }
         );
@@ -39,6 +39,10 @@ const PopularPage = () => {
     fetchPopularMovies();
   }, []);
 
+  const handlePosterClick = (movieId) => {
+    navigate(`/movie/${movieId}`); // 동적 라우팅을 이용하여 상세 페이지로 이동
+  };
+
   return (
     <Container>
       {popularMovies.map((movie, index) => (
@@ -49,6 +53,7 @@ const PopularPage = () => {
           vote_average={movie.vote_average}
           overview={movie.overview}
           index={index}
+          onClick={() => handlePosterClick(movie.id)} // 클릭 이벤트 추가
         />
       ))}
     </Container>

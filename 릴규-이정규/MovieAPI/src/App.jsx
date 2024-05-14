@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MainPage from "./pages/MainPage";
-import SignUpPage from "./components/SignUpPage";
+import SignUpPage from "./pages/SignUpPage";
 import PopularPage from "./pages/PopularPage";
 import NowPlayingPage from "./pages/NowPlayingPage";
 import TopRatedPage from "./pages/TopRatedPage";
-import UpcomingPage from "./components/UpcomingPage";
+import UpcomingPage from "./pages/UpcomingPage";
+import MovieDetailPage from "./pages/MovieDetailPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -24,9 +26,14 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/popular" element={<PopularPage />} />
+          <Route path="/popular/:id" element={<MovieDetailPage />} />
           <Route path="/nowplaying" element={<NowPlayingPage />} />
+          <Route path="/nowplaying/:id" element={<MovieDetailPage />} />
           <Route path="/toprated" element={<TopRatedPage />} />
+          <Route path="/toprated/:id" element={<MovieDetailPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
+          <Route path="/upcoming/:id" element={<MovieDetailPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </Container>
