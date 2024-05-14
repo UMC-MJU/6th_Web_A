@@ -40,6 +40,7 @@ const PopularPage = () => {
   }, []);
 
   const handlePosterClick = (movieId) => {
+    console.log(movieId, "ㅎㅇ");
     navigate(`/movie/${movieId}`); // 동적 라우팅을 이용하여 상세 페이지로 이동
   };
 

@@ -22,23 +22,23 @@ const Form = styled.form`
 
 const Input = styled.input`
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 30px;
   border: 1px solid #ccc;
   font-size: 16px;
 `;
 
 const Button = styled.button`
-  background-color: gray;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 15px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 16px;
 
   &:hover {
-    background-color: #333;
+    background-color: blue;
   }
 `;
 
@@ -124,7 +124,7 @@ const SignUpPage = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         {errors.confirmPassword && <Error>{errors.confirmPassword}</Error>}
-        <Button type="submit">가입하기</Button>
+        <Button type="submit">제출하기</Button>
       </Form>
     </Container>
   );
