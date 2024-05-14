@@ -1,0 +1,12 @@
+.posterDescription {
+  width: 250px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-top: -400px;
+  margin-left: 2vw;
+  position: absolute;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+}
