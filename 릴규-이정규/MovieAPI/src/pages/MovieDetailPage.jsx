@@ -50,12 +50,15 @@ const MovieDescription = styled.div`
 
 // API 요청 함수
 async function fetchMovieDetails(movieId) {
-  const apiKey = process.env.REACT_APP_MOVIE_API_KEY;
+  const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
   );
   if (!response.ok) {
-    throw new Error("Unable to fetch movie details.");
+    const errorData = await response.json();
+    throw new Error(
+      `Unable to fetch movie details: ${errorData.status_message}`
+    );
   }
   return response.json();
 }
@@ -67,11 +70,17 @@ const MovieDetailPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!id || !/^\d+$/.test(id)) {
+      setError("Invalid movie ID.");
+      setLoading(false);
+      return;
+    }
+
     fetchMovieDetails(id)
       .then(setMovie)
       .catch((err) => {
         console.error(err);
-        setError("Failed to load movie details.");
+        setError(`Failed to load movie details: ${err.message}`);
       })
       .finally(() => setLoading(false));
   }, [id]);

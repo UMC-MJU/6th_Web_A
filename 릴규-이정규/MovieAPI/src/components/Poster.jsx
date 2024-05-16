@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const StyledPoster = styled.div`
   border-radius: 10px;
@@ -69,14 +70,21 @@ const StyledPoster = styled.div`
   }
 `;
 
-const Poster = ({ title, poster_path, vote_average, overview }) => {
+const Poster = ({ title, poster_path, vote_average, overview, movieId }) => {
   const [isHovered, setIsHovered] = useState(false);
   const roundedRating = vote_average.toFixed(1);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOnClick = () => {
+    navigate(`${location.pathname}/${movieId}`);
+  };
 
   return (
     <StyledPoster
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleOnClick}
     >
       <img
         src={
@@ -116,6 +124,8 @@ Poster.propTypes = {
   poster_path: PropTypes.string,
   vote_average: PropTypes.number,
   overview: PropTypes.string,
+  index: PropTypes.number,
+  movieId: PropTypes.number,
 };
 
 export default Poster;

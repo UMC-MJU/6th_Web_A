@@ -26,6 +26,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/popular" element={<PopularPage />} />
+          {/* 동적 라우팅 */}
           <Route path="/popular/:id" element={<MovieDetailPage />} />
           <Route path="/nowplaying" element={<NowPlayingPage />} />
           <Route path="/nowplaying/:id" element={<MovieDetailPage />} />
@@ -33,6 +34,7 @@ function App() {
           <Route path="/toprated/:id" element={<MovieDetailPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/upcoming/:id" element={<MovieDetailPage />} />
+          {/* Not Found */}
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

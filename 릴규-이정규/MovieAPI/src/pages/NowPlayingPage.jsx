@@ -1,4 +1,3 @@
-// NowPlayingPage.jsx
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -49,6 +48,7 @@ const NowPlayingPage = () => {
           vote_average={movie.vote_average}
           overview={movie.overview}
           index={index}
+          movieID={movie.id}
         />
       ))}
     </Container>

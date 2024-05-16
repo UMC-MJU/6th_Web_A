@@ -39,6 +39,7 @@ const Button = styled.button`
 
   &:hover {
     background-color: blue;
+    color: white;
   }
 `;
 

@@ -48,6 +48,7 @@ const UpcomingPage = () => {
           vote_average={movie.vote_average}
           overview={movie.overview}
           index={index}
+          movieId={movie.id}
         />
       ))}
     </Container>

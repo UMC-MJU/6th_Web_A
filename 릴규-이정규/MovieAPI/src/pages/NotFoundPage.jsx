@@ -12,9 +12,7 @@ const Container = styled.div`
 
 const NotFoundPage = () => {
   return (
-    <Container>
-      <Background>잘못된 주소입니다.</Background>
-    </Container>
+    <Container>{/*<Background>잘못된 주소입니다.</Background>*/}</Container>
   );
 };
 
