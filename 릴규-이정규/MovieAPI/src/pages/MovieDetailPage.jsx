@@ -55,10 +55,7 @@ async function fetchMovieDetails(movieId) {
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
   );
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(
-      `Unable to fetch movie details: ${errorData.status_message}`
-    );
+    throw new Error("Unable to fetch movie details.");
   }
   return response.json();
 }
@@ -70,17 +67,11 @@ const MovieDetailPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!id || !/^\d+$/.test(id)) {
-      setError("Invalid movie ID.");
-      setLoading(false);
-      return;
-    }
-
     fetchMovieDetails(id)
       .then(setMovie)
       .catch((err) => {
         console.error(err);
-        setError(`Failed to load movie details: ${err.message}`);
+        setError("Failed to load movie details.");
       })
       .finally(() => setLoading(false));
   }, [id]);

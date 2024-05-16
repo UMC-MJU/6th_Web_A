@@ -70,7 +70,13 @@ const StyledPoster = styled.div`
   }
 `;
 
-const Poster = ({ title, poster_path, vote_average, overview, movieId }) => {
+const Poster = ({
+  title = "Unknown Title",
+  poster_path = null,
+  vote_average = 0,
+  overview = "No overview available.",
+  movieId,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const roundedRating = vote_average.toFixed(1);
   const navigate = useNavigate();
@@ -92,7 +98,7 @@ const Poster = ({ title, poster_path, vote_average, overview, movieId }) => {
             ? `https://image.tmdb.org/t/p/w500${poster_path}`
             : "/path/to/default.jpg"
         }
-        alt={title || "Default Title"}
+        alt={title}
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = "/path/to/default.jpg";
@@ -100,23 +106,16 @@ const Poster = ({ title, poster_path, vote_average, overview, movieId }) => {
       />
       {isHovered && (
         <div className="overview">
-          <h2>{title || "Default Title"}</h2>
-          <p>{overview || "No overview available."}</p>
+          <h2>{title}</h2>
+          <p>{overview}</p>
         </div>
       )}
       <div className="info">
-        <h5>{title || "Default Title"}</h5>
+        <h5>{title}</h5>
         <span>{roundedRating}</span>
       </div>
     </StyledPoster>
   );
-};
-
-Poster.defaultProps = {
-  title: "Unknown Title",
-  poster_path: null,
-  vote_average: 0,
-  overview: "No overview available.",
 };
 
 Poster.propTypes = {
@@ -125,7 +124,7 @@ Poster.propTypes = {
   vote_average: PropTypes.number,
   overview: PropTypes.string,
   index: PropTypes.number,
-  movieId: PropTypes.number,
+  movieId: PropTypes.number.isRequired, // Required field
 };
 
 export default Poster;
