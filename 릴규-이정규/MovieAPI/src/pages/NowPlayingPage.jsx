@@ -48,7 +48,7 @@ const NowPlayingPage = () => {
           vote_average={movie.vote_average}
           overview={movie.overview}
           index={index}
-          movieID={movie.id}
+          movieId={movie.id}
         />
       ))}
     </Container>
