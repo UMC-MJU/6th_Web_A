@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -27,6 +28,10 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
+const InputConfirm = styled(Input)`
+  margin-bottom: 30px;
+`;
+
 const Button = styled.button`
   background-color: white;
   color: black;
@@ -38,14 +43,42 @@ const Button = styled.button`
   font-size: 16px;
 
   &:hover {
-    background-color: blue;
-    color: white;
+    background-color: #ffcc00;
+    color: black;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
   }
 `;
 
 const Error = styled.div`
   color: red;
   font-size: 14px;
+`;
+
+const Title = styled.h1`
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const Message = styled.div`
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const BoldLink = styled(Link)`
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
 const SignUpPage = () => {
@@ -55,12 +88,21 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form is valid! Submitting...");
+      console.log("Form is valid! Submitting...", {
+        name,
+        email,
+        age,
+        password,
+        confirmPassword,
+      });
+      alert("회원가입이 성공적으로 완료되었습니다!");
+      navigate("/");
     } else {
       setErrors(newErrors);
     }
@@ -68,18 +110,56 @@ const SignUpPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!name) newErrors.name = "이름을 입력하세요.";
-    if (!email) newErrors.email = "이메일을 입력하세요.";
-    if (!age) newErrors.age = "나이를 입력하세요.";
-    if (!password) newErrors.password = "비밀번호를 입력하세요.";
-    if (password !== confirmPassword)
+
+    if (!email) {
+      newErrors.email = "이메일을 입력하세요.";
+    } else if (!email.includes("@")) {
+      newErrors.email = "이메일 형식이 올바르지 않습니다.";
+    }
+
+    if (!age) {
+      newErrors.age = "나이를 입력하세요.";
+    } else if (!Number.isInteger(parseFloat(age))) {
+      newErrors.age = "나이는 정수여야 합니다.";
+    } else if (parseInt(age) < 19) {
+      newErrors.age = "19살 이상만 가입 가능합니다.";
+    } else if (parseInt(age) < 0) {
+      newErrors.age = "나이는 음수가 될 수 없습니다.";
+    }
+
+    if (!password) {
+      newErrors.password = "비밀번호를 입력하세요.";
+    } else if (password.length < 4 || password.length > 12) {
+      newErrors.password = "비밀번호는 4자리 이상 12자리 이하이어야 합니다.";
+    } else if (
+      !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/.test(
+        password
+      )
+    ) {
+      newErrors.password = "영어, 숫자, 특수문자를 조합해야 합니다.";
+    }
+
+    if (password !== confirmPassword) {
       newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+    }
+
     return newErrors;
   };
+
+  const isFormValid =
+    Object.keys(errors).length === 0 &&
+    name &&
+    email &&
+    age &&
+    password &&
+    confirmPassword;
 
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
+        <Title>회원가입 페이지</Title>
         <Input
           type="text"
           id="name"
@@ -116,7 +196,7 @@ const SignUpPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {errors.password && <Error>{errors.password}</Error>}
-        <Input
+        <InputConfirm
           type="password"
           id="confirm-password"
           name="confirm-password"
@@ -125,7 +205,15 @@ const SignUpPage = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         {errors.confirmPassword && <Error>{errors.confirmPassword}</Error>}
-        <Button type="submit">제출하기</Button>
+        <Button type="submit" disabled={!isFormValid}>
+          제출하기
+        </Button>
+        <Message>
+          <span>이미 아이디가 있으신가요?</span>
+          <span style={{ marginLeft: "10px" }}>
+            <BoldLink to="/login">로그인 페이지로 이동하기</BoldLink>
+          </span>
+        </Message>
       </Form>
     </Container>
   );
