@@ -80,6 +80,14 @@ const Movie = styled.div`
   width: 90%;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const MoviePoster = styled.img`
+  width: 100px;
+  height: 150px;
+  margin-right: 20px;
 `;
 
 function MainPage() {
@@ -88,7 +96,7 @@ function MainPage() {
 
   const fetchMovies = async () => {
     if (!searchTerm) return;
-    const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
+    const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5"; // Use your actual TMDB API key
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
       searchTerm
     )}`;
@@ -120,8 +128,14 @@ function MainPage() {
         <SearchResultContainer>
           {movies.map((movie) => (
             <Movie key={movie.id}>
-              <strong>{movie.title}</strong> (
-              {movie.release_date && movie.release_date.split("-")[0]})
+              <MoviePoster
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt="Movie Poster"
+              />
+              <div>
+                <strong>{movie.title}</strong> (
+                {movie.release_date && movie.release_date.split("-")[0]})
+              </div>
             </Movie>
           ))}
         </SearchResultContainer>
