@@ -74,7 +74,7 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
-      setError("Email and Password cannot be empty");
+      setError("이메일 및 비밀번호는 빈칸으로 둘 수 없습니다");
       return;
     }
     if (
@@ -85,7 +85,7 @@ const LoginPage = () => {
       setIsLoggedIn(true);
       navigate("/");
     } else {
-      setError("Invalid credentials");
+      setError("로그인 정보가 일치하지 않습니다");
     }
   };
 

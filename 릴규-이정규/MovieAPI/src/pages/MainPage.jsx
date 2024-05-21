@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
+import { UserContext } from "../contexts/UserContext";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -93,6 +94,7 @@ const MoviePoster = styled.img`
 function MainPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
+  const { user } = useContext(UserContext);
 
   const fetchMovies = async () => {
     if (!searchTerm) return;
@@ -113,7 +115,9 @@ function MainPage() {
     <div>
       <GlobalStyle />
       <MainPageContainer>
-        <WelcomeMessage>환영합니다!</WelcomeMessage>
+        <WelcomeMessage>
+          {user ? `${user.name}님 환영합니다!` : "환영합니다!"}
+        </WelcomeMessage>
       </MainPageContainer>
       <LowerSection>
         <Text> 🎥 Find your movies !</Text>

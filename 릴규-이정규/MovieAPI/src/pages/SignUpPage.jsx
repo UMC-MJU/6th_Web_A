@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../contexts/LoginContext";
+import { UserContext } from "../contexts/UserContext";
 
 const Container = styled.div`
   display: flex;
@@ -91,12 +92,14 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { setUserInfo } = useContext(LoginContext);
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
       setUserInfo({ name, email, age, password });
+      setUser({ name, email }); // Setting user context
       alert("회원가입이 성공적으로 완료되었습니다!");
       navigate("/login");
     } else {

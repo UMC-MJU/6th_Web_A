@@ -13,6 +13,7 @@ import MovieDetailPage from "./pages/MovieDetailPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import styled from "styled-components";
 import { LoginProvider, LoginContext } from "./contexts/LoginContext";
+import { UserProvider } from "./contexts/UserContext";
 
 const Container = styled.div`
   position: relative;
@@ -32,82 +33,91 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <LoginProvider>
-      <BrowserRouter>
-        <Container>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/popular"
-              element={
-                <ProtectedRoute>
-                  <PopularPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/popular/:id"
-              element={
-                <ProtectedRoute>
-                  <MovieDetailPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/nowplaying"
-              element={
-                <ProtectedRoute>
-                  <NowPlayingPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/nowplaying/:id"
-              element={
-                <ProtectedRoute>
-                  <MovieDetailPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/toprated"
-              element={
-                <ProtectedRoute>
-                  <TopRatedPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/toprated/:id"
-              element={
-                <ProtectedRoute>
-                  <MovieDetailPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/upcoming"
-              element={
-                <ProtectedRoute>
-                  <UpcomingPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/upcoming/:id"
-              element={
-                <ProtectedRoute>
-                  <MovieDetailPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/*" element={<NotFoundPage />} />
-          </Routes>
-          <Footer />
-        </Container>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Container>
+            <Navbar />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <MainPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/popular"
+                element={
+                  <ProtectedRoute>
+                    <PopularPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/popular/:id"
+                element={
+                  <ProtectedRoute>
+                    <MovieDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/nowplaying"
+                element={
+                  <ProtectedRoute>
+                    <NowPlayingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/nowplaying/:id"
+                element={
+                  <ProtectedRoute>
+                    <MovieDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/toprated"
+                element={
+                  <ProtectedRoute>
+                    <TopRatedPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/toprated/:id"
+                element={
+                  <ProtectedRoute>
+                    <MovieDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/upcoming"
+                element={
+                  <ProtectedRoute>
+                    <UpcomingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/upcoming/:id"
+                element={
+                  <ProtectedRoute>
+                    <MovieDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/*" element={<NotFoundPage />} />
+            </Routes>
+            <Footer />
+          </Container>
+        </BrowserRouter>
+      </UserProvider>
     </LoginProvider>
   );
 }
