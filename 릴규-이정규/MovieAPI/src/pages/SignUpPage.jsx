@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginContext } from "../contexts/LoginContext";
 
 const Container = styled.div`
   display: flex;
@@ -89,20 +90,15 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { setUserInfo } = useContext(LoginContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form is valid! Submitting...", {
-        name,
-        email,
-        age,
-        password,
-        confirmPassword,
-      });
+      setUserInfo({ name, email, age, password });
       alert("회원가입이 성공적으로 완료되었습니다!");
-      navigate("/");
+      navigate("/login");
     } else {
       setErrors(newErrors);
     }
@@ -112,38 +108,26 @@ const SignUpPage = () => {
     const newErrors = {};
 
     if (!name) newErrors.name = "이름을 입력하세요.";
-
-    if (!email) {
-      newErrors.email = "이메일을 입력하세요.";
-    } else if (!email.includes("@")) {
+    if (!email) newErrors.email = "이메일을 입력하세요.";
+    else if (!email.includes("@"))
       newErrors.email = "이메일 형식이 올바르지 않습니다.";
-    }
-
-    if (!age) {
-      newErrors.age = "나이를 입력하세요.";
-    } else if (!Number.isInteger(parseFloat(age))) {
+    if (!age) newErrors.age = "나이를 입력하세요.";
+    else if (!Number.isInteger(parseFloat(age)))
       newErrors.age = "나이는 정수여야 합니다.";
-    } else if (parseInt(age) < 19) {
-      newErrors.age = "19살 이상만 가입 가능합니다.";
-    } else if (parseInt(age) < 0) {
-      newErrors.age = "나이는 음수가 될 수 없습니다.";
-    }
-
-    if (!password) {
-      newErrors.password = "비밀번호를 입력하세요.";
-    } else if (password.length < 4 || password.length > 12) {
+    else if (parseInt(age) < 19) newErrors.age = "19살 이상만 가입 가능합니다.";
+    else if (parseInt(age) < 0) newErrors.age = "나이는 음수가 될 수 없습니다.";
+    if (!password) newErrors.password = "비밀번호를 입력하세요.";
+    else if (password.length < 4 || password.length > 12)
       newErrors.password = "비밀번호는 4자리 이상 12자리 이하이어야 합니다.";
-    } else if (
+    else if (
       !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/.test(
         password
       )
     ) {
       newErrors.password = "영어, 숫자, 특수문자를 조합해야 합니다.";
     }
-
-    if (password !== confirmPassword) {
+    if (password !== confirmPassword)
       newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
-    }
 
     return newErrors;
   };

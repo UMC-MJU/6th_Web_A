@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../contexts/LoginContext";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Container = styled.div`
 
 const Form = styled.form`
   background-color: rgba(15, 9, 59, 0.856);
-  width: 400px;
+  width: 500px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -29,11 +30,13 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background-color: white;
+  background-color: #d3d3d3;
   color: black;
   padding: 15px;
   border-radius: 15px;
   border: none;
+  font-weight: bold;
+  margin-top: 30px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 16px;
@@ -64,39 +67,27 @@ const Title = styled.h1`
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
+  const { setIsLoggedIn, userInfo } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form is valid! Logging in...");
-      navigate("/"); // Navigate to the homepage or another page after successful login
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      setError("Email and Password cannot be empty");
+      return;
+    }
+    if (
+      userInfo &&
+      email === userInfo.email &&
+      password === userInfo.password
+    ) {
+      setIsLoggedIn(true);
+      navigate("/");
     } else {
-      setErrors(newErrors);
+      setError("Invalid credentials");
     }
   };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Email validation
-    if (!email) {
-      newErrors.email = "이메일을 입력하세요.";
-    } else if (!email.includes("@")) {
-      newErrors.email = "이메일 형식이 올바르지 않습니다.";
-    }
-
-    // Password validation
-    if (!password) {
-      newErrors.password = "비밀번호를 입력하세요.";
-    }
-
-    return newErrors;
-  };
-
-  const isFormValid = Object.keys(errors).length === 0 && email && password;
 
   return (
     <Container>
@@ -104,25 +95,18 @@ const LoginPage = () => {
         <Title>로그인 페이지</Title>
         <Input
           type="email"
-          id="email"
-          name="email"
-          placeholder="이메일"
+          placeholder="아이디"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {errors.email && <Error>{errors.email}</Error>}
         <Input
           type="password"
-          id="password"
-          name="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {errors.password && <Error>{errors.password}</Error>}
-        <Button type="submit" disabled={!isFormValid}>
-          로그인
-        </Button>
+        <Button type="submit">로그인</Button>
+        {error && <Error>{error}</Error>}
       </Form>
     </Container>
   );

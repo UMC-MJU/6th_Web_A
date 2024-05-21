@@ -96,7 +96,7 @@ function MainPage() {
 
   const fetchMovies = async () => {
     if (!searchTerm) return;
-    const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5"; // Use your actual TMDB API key
+    const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
       searchTerm
     )}`;
