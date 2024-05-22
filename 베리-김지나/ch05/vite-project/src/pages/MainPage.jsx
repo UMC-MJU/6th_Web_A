@@ -1,20 +1,79 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SearchMovies from "../components/SearchMovies";
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(38, 49, 90);
+    height: 100%;
+  }
+  #root {
+    height: 100%;
+  }
+`;
 const MainPage = () => {
-  return (
-    <MainContainer>
-      <TextContainer>
-        <WelcomeText>환영합니다</WelcomeText>
-      </TextContainer>
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const [searchWord, setSearchWord] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-      <SearchContainer>
-        <SearchText>📽 Find your movies️ !</SearchText>
-        <Search>
-          <SearchInput />
-          <SearchButton>🔍</SearchButton>
-        </Search>
-      </SearchContainer>
-    </MainContainer>
+  const handleChange = (e) => {
+    setSearchWord(e.target.value);
+  };
+
+  useEffect(() => {
+    if (!searchWord) {
+      setMovies([]);
+    } else {
+      fetchMovies(searchWord);
+    }
+  }, [searchWord]);
+
+  const fetchMovies = async (query) => {
+    setIsLoading(true);
+    try {
+      const data = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false`
+      );
+      setMovies(data.data);
+    } catch (error) {
+      console.error("영화 정보를 가져오는 중 오류가 발생했습니다.", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <GlobalStyle />
+      <MainContainer>
+        <TextContainer>
+          <WelcomeText>환영합니다</WelcomeText>
+        </TextContainer>
+
+        <SearchContainer>
+          <SearchText>📽 Find your movies️ !</SearchText>
+          <Search>
+            <SearchInput
+              name="search"
+              value={searchWord}
+              onChange={handleChange}
+            />
+            <SearchButton>🔍</SearchButton>
+          </Search>
+          {searchWord && (
+            <ContentsContainer>
+              {movies.results?.map((data, index) => (
+                <SearchMovies data={data} key={index} />
+              ))}
+            </ContentsContainer>
+          )}
+        </SearchContainer>
+      </MainContainer>
+    </>
   );
 };
 
@@ -23,6 +82,7 @@ export default MainPage;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: rgb(38, 49, 90);
 `;
 
 const TextContainer = styled.div`
@@ -64,6 +124,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   width: 350px;
   height: 30px;
+  padding-left: 20px;
   border: none;
   border-radius: 20px;
 `;
@@ -78,4 +139,16 @@ const SearchButton = styled.button`
   align-items: center;
   cursor: pointer;
   background-color: rgb(220, 194, 99);
+`;
+
+const ContentsContainer = styled.div`
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(33, 35, 72);
+  padding: 0 5px;
+  width: 70%;
+  flex-wrap: wrap;
+  /* max-height: 500px;
+  overflow-y: auto; */
 `;
