@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
@@ -13,13 +13,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const MainPageContainer = styled.div`
-  background-color: rgba(15, 9, 59, 0.856);
+  background-color: black;
   height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: black;
 `;
 
 const WelcomeMessage = styled.h2`
@@ -91,12 +90,22 @@ const MoviePoster = styled.img`
   margin-right: 20px;
 `;
 
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
 function MainPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
   const { user } = useContext(UserContext);
 
-  const fetchMovies = async () => {
+  const fetchMovies = useCallback(async () => {
     if (!searchTerm) return;
     const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
@@ -109,7 +118,11 @@ function MainPage() {
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
-  };
+  }, [searchTerm]);
+
+  const debouncedFetchMovies = useCallback(debounce(fetchMovies, 300), [
+    fetchMovies,
+  ]);
 
   return (
     <div>
@@ -125,9 +138,12 @@ function MainPage() {
           <SearchInput
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              debouncedFetchMovies();
+            }}
           />
-          <SearchButton onClick={fetchMovies}>🔍</SearchButton>
+          <SearchButton onClick={debouncedFetchMovies}>🔍</SearchButton>
         </SearchWrapper>
         <SearchResultContainer>
           {movies.map((movie) => (
