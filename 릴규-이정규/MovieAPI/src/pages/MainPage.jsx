@@ -1,7 +1,9 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -82,6 +84,7 @@ const Movie = styled.div`
   border-radius: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const MoviePoster = styled.img`
@@ -90,39 +93,37 @@ const MoviePoster = styled.img`
   margin-right: 20px;
 `;
 
-function debounce(func, delay) {
-  let timer;
-  return function (...args) {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, delay);
-  };
-}
-
 function MainPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const fetchMovies = useCallback(async () => {
-    if (!searchTerm) return;
-    const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
-      searchTerm
-    )}`;
+  // Debounced fetchMovies function
+  const fetchMovies = useCallback(
+    _.debounce(async (searchTerm) => {
+      if (!searchTerm) return;
+      const apiKey = "8e2d1e6d3637d6fb007d0df41e9c5ff5";
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
+        searchTerm
+      )}`;
+      try {
+        const response = await axios.get(url);
+        setMovies(response.data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    }, 300),
+    []
+  );
 
-    try {
-      const response = await axios.get(url);
-      setMovies(response.data.results);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  }, [searchTerm]);
+  useEffect(() => {
+    fetchMovies(searchTerm);
+  }, [searchTerm, fetchMovies]);
 
-  const debouncedFetchMovies = useCallback(debounce(fetchMovies, 300), [
-    fetchMovies,
-  ]);
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div>
@@ -138,19 +139,19 @@ function MainPage() {
           <SearchInput
             type="text"
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              debouncedFetchMovies();
-            }}
+            onChange={handleSearchChange}
           />
-          <SearchButton onClick={debouncedFetchMovies}>🔍</SearchButton>
+          <SearchButton onClick={() => {}}>🔍</SearchButton>
         </SearchWrapper>
         <SearchResultContainer>
           {movies.map((movie) => (
-            <Movie key={movie.id}>
+            <Movie
+              key={movie.id}
+              onClick={() => navigate(`/movie/${movie.id}`)} // 올바른 경로로 이동하도록 수정
+            >
               <MoviePoster
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt="Movie Poster"
+                alt={`${movie.title} poster`}
               />
               <div>
                 <strong>{movie.title}</strong> (

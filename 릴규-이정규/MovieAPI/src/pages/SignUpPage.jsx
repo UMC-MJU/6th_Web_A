@@ -85,6 +85,7 @@ const BoldLink = styled(Link)`
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
@@ -98,8 +99,8 @@ const SignUpPage = () => {
     event.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      setUserInfo({ name, email, age, password });
-      setUser({ name, email }); // Setting user context
+      setUserInfo({ name, id, email, age, password });
+      setUser({ name, id }); // Setting user context
       alert("회원가입이 성공적으로 완료되었습니다!");
       navigate("/login");
     } else {
@@ -111,6 +112,7 @@ const SignUpPage = () => {
     const newErrors = {};
 
     if (!name) newErrors.name = "이름을 입력하세요.";
+    if (!id) newErrors.id = "ID를 입력하세요.";
     if (!email) newErrors.email = "이메일을 입력하세요.";
     else if (!email.includes("@"))
       newErrors.email = "이메일 형식이 올바르지 않습니다.";
@@ -138,6 +140,7 @@ const SignUpPage = () => {
   const isFormValid =
     Object.keys(errors).length === 0 &&
     name &&
+    id &&
     email &&
     age &&
     password &&
@@ -151,16 +154,25 @@ const SignUpPage = () => {
           type="text"
           id="name"
           name="name"
-          placeholder="이름"
+          placeholder="이름을 입력해주세요"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         {errors.name && <Error>{errors.name}</Error>}
         <Input
+          type="text"
+          id="id"
+          name="id"
+          placeholder="아이디를 입력해주세요"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+        />
+        {errors.id && <Error>{errors.id}</Error>}
+        <Input
           type="email"
           id="email"
           name="email"
-          placeholder="이메일"
+          placeholder="이메일을 입력해주세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -169,7 +181,7 @@ const SignUpPage = () => {
           type="number"
           id="age"
           name="age"
-          placeholder="나이"
+          placeholder="나이를 입력해주세요"
           value={age}
           onChange={(e) => setAge(e.target.value)}
         />
@@ -178,7 +190,7 @@ const SignUpPage = () => {
           type="password"
           id="password"
           name="password"
-          placeholder="비밀번호"
+          placeholder="비밀번호를 입력해주세요"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -187,7 +199,7 @@ const SignUpPage = () => {
           type="password"
           id="confirm-password"
           name="confirm-password"
-          placeholder="비밀번호 확인"
+          placeholder="비밀번호를 확인해주세요"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />

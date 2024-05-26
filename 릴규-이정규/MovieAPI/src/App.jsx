@@ -22,12 +22,7 @@ const Container = styled.div`
 
 const ProtectedRoute = ({ children }) => {
   const { isLoggedIn } = React.useContext(LoginContext);
-
-  if (!isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
-
-  return children;
+  return isLoggedIn ? children : <Navigate to="/login" />;
 };
 
 function App() {
@@ -106,6 +101,14 @@ function App() {
               />
               <Route
                 path="/upcoming/:id"
+                element={
+                  <ProtectedRoute>
+                    <MovieDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/movie/:id" // 영화 상세 페이지로 이동하는 경로 추가
                 element={
                   <ProtectedRoute>
                     <MovieDetailPage />
