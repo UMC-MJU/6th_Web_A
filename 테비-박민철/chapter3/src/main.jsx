@@ -4,15 +4,15 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ToggleProvider } from "./utils/contexts/ToggleContext.jsx";
-import { LoginProvider } from "./utils/contexts/LoginContext.jsx";
+import { SignupFormProvider } from "./utils/contexts/SignupFormContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ToggleProvider>
-        <LoginProvider>
+        <SignupFormProvider>
           <App />
-        </LoginProvider>
+        </SignupFormProvider>
       </ToggleProvider>
     </BrowserRouter>
   </React.StrictMode>
