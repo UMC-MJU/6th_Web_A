@@ -43,7 +43,6 @@ const MovieDetailPage = () => {
   const repeatStar = (count) => {
     return "⭐️".repeat(count);
   };
-
   return (
     <>
       {element ? (

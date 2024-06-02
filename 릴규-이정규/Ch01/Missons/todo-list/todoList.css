@@ -1,0 +1,61 @@
+body {
+  background-color: rgba(190, 177, 252, 0.3);
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+hr {
+  margin-bottom: 40px;
+  width: 800px;
+}
+
+#input {
+  width: 600px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+#input::placeholder {
+  font-style: italic;
+}
+
+.todoContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 700px;
+}
+
+.todoList,
+.doneList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  margin: 0 20px;
+}
+
+li {
+  display: flex;
+  font-weight: bold;
+  width: 150px;
+  list-style: none;
+  border-bottom: 2px solid gainsboro;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}

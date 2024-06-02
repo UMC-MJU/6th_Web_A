@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Toggle from "./Toggle";
-import useLogin from "../utils/hooks/useLogin";
 
 const CustomButton = styled.button`
   width: 110px;
@@ -35,7 +34,6 @@ const Tab = styled.div`
 `;
 
 const Header = () => {
-  const { isLoggedIn, handleLogin } = useLogin();
   const RouteButton = ({ path, text }) => {
     return (
       <Link to={path}>
@@ -47,12 +45,7 @@ const Header = () => {
     <Body>
       <RouteButton path="/" text="UMC Movie" />
       <Tab>
-        <CustomButton
-          onClick={handleLogin}
-          style={{ color: isLoggedIn ? "yellow" : "white" }}
-        >
-          {isLoggedIn ? "로그아웃" : "로그인"}
-        </CustomButton>
+        <RouteButton path="/signup" text="회원가입" />
         <RouteButton path="/popular" text="Popular" />
         <RouteButton path="/now-playing" text="Now Playing" />
         <RouteButton path="/top-rated" text="Top Rated" />
