@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Banner = styled.div`
-  height: 300px;
+  height: 50px;
   padding: 0 auto;
   background-color: black;
   display: grid;
