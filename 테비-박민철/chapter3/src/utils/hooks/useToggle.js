@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { ToggleContext } from "../contexts/toggleContext";
+import { ToggleContext } from "../contexts/ToggleContext";
 
 const useToggle = () => {
-  const { isClicked, toggle } = useContext(ToggleContext);
-  return { isClicked, toggle };
+  const { isToggled, handleToggle } = useContext(ToggleContext);
+  return { isToggled, handleToggle };
 };
 
 export default useToggle;

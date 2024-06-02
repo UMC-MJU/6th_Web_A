@@ -12,12 +12,10 @@ const Container = styled.div`
 
 const Content = styled.div`
   flex: 1;
-  margin-bottom: 70px;
 `;
 
 const Background = styled.div`
   gap: 20px;
-  padding: 20px;
 `;
 
 const Layout = ({ children }) => {

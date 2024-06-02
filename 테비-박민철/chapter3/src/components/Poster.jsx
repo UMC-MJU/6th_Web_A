@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Body = styled.div`
   border-radius: 8px;
@@ -7,6 +8,7 @@ const Body = styled.div`
   margin: 40px auto;
   aspect-ratio: 2/3;
   background-color: #cccccc;
+  cursor: pointer;
 `;
 
 const Image = styled.img`
@@ -40,8 +42,14 @@ const Rate = styled.div`
 `;
 
 const Poster = ({ element }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleClickPoster = () =>
+    navigate(`${location.pathname}/${element.id}`, { state: { element } });
+
   return (
-    <Body>
+    <Body onClick={handleClickPoster}>
       <Image src={`https://image.tmdb.org/t/p/w300${element.poster_path}`} />
       <Description>
         <Title>

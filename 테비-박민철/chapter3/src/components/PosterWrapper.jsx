@@ -8,14 +8,15 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
   gap: 20px;
+  margin-bottom: 70px;
 `;
 
 const PosterWrapper = ({ movieData }) => {
-  const { isClicked } = useToggle();
+  const { isToggled } = useToggle();
   const [showGreeting, setShowGreeting] = useState(false);
 
   useEffect(() => {
-    if (isClicked) {
+    if (isToggled) {
       setShowGreeting(true);
       const timer = setTimeout(() => {
         setShowGreeting(false);
@@ -23,7 +24,7 @@ const PosterWrapper = ({ movieData }) => {
 
       return () => clearTimeout(timer);
     }
-  }, [isClicked]);
+  }, [isToggled]);
 
   return (
     <Wrapper>

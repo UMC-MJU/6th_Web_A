@@ -15,8 +15,7 @@ const useMovieData = (type) => {
           setMovieData(response.data);
         }
       } catch (error) {
-        console.error("Error fetching movie data:", error);
-      } finally {
+        console.error("잘못돤 요청압니다.");
       }
     };
 

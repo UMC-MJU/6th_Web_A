@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Toggle from "./Toggle";
 
@@ -45,6 +45,7 @@ const Header = () => {
     <Body>
       <RouteButton path="/" text="UMC Movie" />
       <Tab>
+        <RouteButton path="/signup" text="회원가입" />
         <RouteButton path="/popular" text="Popular" />
         <RouteButton path="/now-playing" text="Now Playing" />
         <RouteButton path="/top-rated" text="Top Rated" />

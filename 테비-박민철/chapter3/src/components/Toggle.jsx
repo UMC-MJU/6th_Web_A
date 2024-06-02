@@ -5,7 +5,7 @@ const ToggleWrapper = styled.div`
   position: relative;
   width: 70px;
   height: 30px;
-  background-color: ${({ isClicked }) => (isClicked ? "green" : "#cccccc")};
+  background-color: ${({ $toggled }) => ($toggled ? "green" : "#cccccc")};
   border: 1px solid #cccccc;
   border-radius: 15px;
   cursor: pointer;
@@ -14,7 +14,7 @@ const ToggleWrapper = styled.div`
 const ToggleButton = styled.button`
   position: absolute;
   top: 0;
-  left: ${({ isClicked }) => (isClicked ? "0px" : "40px")};
+  left: ${({ $toggled }) => ($toggled ? "0px" : "40px")};
   width: 30px;
   height: 30px;
   background-color: #ffffff;
@@ -24,11 +24,11 @@ const ToggleButton = styled.button`
 `;
 
 const Toggle = () => {
-  const { isClicked, toggle } = useToggle();
+  const { isToggled, handleToggle } = useToggle();
 
   return (
-    <ToggleWrapper isClicked={isClicked} onClick={toggle}>
-      <ToggleButton isClicked={isClicked} />
+    <ToggleWrapper $toggled={isToggled} onClick={handleToggle}>
+      <ToggleButton $toggled={isToggled} />
     </ToggleWrapper>
   );
 };
