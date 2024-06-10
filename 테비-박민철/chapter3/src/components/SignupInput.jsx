@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import useFormValidation from "../utils/hooks/useFormValidation";
 
 const InputWrapper = styled.div`
   width: 400px;
@@ -28,7 +27,6 @@ const SignupInput = ({
   isValidated,
 }) => {
   const [warning, setWarning] = useState("");
-  // const { handleFormChange } = useFormValidation();
 
   useEffect(() => {
     if (validator && label !== "비밀번호 확인") {
