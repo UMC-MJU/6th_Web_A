@@ -11,6 +11,7 @@ import SignupPage from "./pages/SignupPage";
 function App() {
   return (
     <>
+      {/* 테스트 커밋 */}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/:id" element={<MovieDetailPage />} />
