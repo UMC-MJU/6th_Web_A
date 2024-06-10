@@ -78,6 +78,15 @@ const SignupPage = () => {
             isValidated={setIsNameValidated}
           />
           <SignupInput
+            id="id"
+            label={"아이디"}
+            placeholder={"아이디를 입력해 주세요."}
+            validator={nameValidator}
+            value={name}
+            onChange={setName}
+            isValidated={setIsNameValidated}
+          />
+          <SignupInput
             label={"이메일"}
             placeholder={"이메일을 입력해 주세요."}
             validator={emailValidator}
