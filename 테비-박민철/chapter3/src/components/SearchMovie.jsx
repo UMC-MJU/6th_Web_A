@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSearchMovieData from "../utils/hooks/useSearchMovieData";
 import PosterWrapper from "./PosterWrapper";
+import useDebounce from "../utils/hooks/useDebounce";
 
 const Title = styled.h1`
   color: white;
@@ -25,15 +26,31 @@ const MovieResult = styled.div`
   width: 75vw;
   height: 600px;
   margin-bottom: 100px;
+  text-align: center;
+`;
+
+const LoadingText = styled.div`
+  margin-top: 200px;
 `;
 
 const SearchMovie = () => {
   const [value, setValue] = useState();
-  const { searchMovieData } = useSearchMovieData(value);
+  const [searchData, setSearchData] = useState(null);
+  const debouncedValue = useDebounce({ value, delay: 500 });
+
+  const { searchMovieData } = useSearchMovieData(debouncedValue);
 
   const handleOnChange = (e) => {
     setValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (value === "") {
+      setSearchData(null);
+    } else {
+      setSearchData(searchMovieData);
+    }
+  }, [value, searchMovieData]);
 
   return (
     <>
@@ -41,7 +58,11 @@ const SearchMovie = () => {
       <Input onChange={handleOnChange} value={value} />
       {value && (
         <MovieResult>
-          <PosterWrapper movieData={searchMovieData} />
+          {searchData?.total_results > 0 ? (
+            <PosterWrapper movieData={searchData} />
+          ) : (
+            <LoadingText>데이터를 받아오는 중입니다.</LoadingText>
+          )}
         </MovieResult>
       )}
     </>
