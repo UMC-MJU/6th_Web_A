@@ -1,16 +1,37 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
+// Global Style
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: rgba(15, 9, 59, 0.856);
+  }
+`;
+
+// Sidebar slide-in animation
+const slideIn = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+// Sidebar slide-out animation
+const slideOut = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 `;
 
@@ -33,12 +54,20 @@ const LowerSection = styled.div`
   box-sizing: border-box;
   text-align: center;
   background-color: rgba(15, 9, 59, 0.856);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 const Text = styled.p`
   color: white;
   font-size: 30px;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 `;
 
 const SearchWrapper = styled.div`
@@ -47,6 +76,11 @@ const SearchWrapper = styled.div`
   align-items: center;
   gap: 20px;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -54,6 +88,11 @@ const SearchInput = styled.input`
   width: 40%;
   border: 1px solid #333;
   border-radius: 50px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 8px;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -66,6 +105,11 @@ const SearchButton = styled.button`
   align-items: center;
   cursor: pointer;
   background-color: rgb(220, 194, 99);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 40px;
+  }
 `;
 
 const SearchResultContainer = styled.div`
@@ -85,12 +129,68 @@ const Movie = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const MoviePoster = styled.img`
   width: 100px;
   height: 150px;
   margin-right: 20px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 120px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+`;
+
+const MenuIcon = styled.div`
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+const Sidebar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: rgba(15, 9, 59, 0.856);
+  padding: 20px;
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0)" : "translateX(-100%)"};
+  animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s forwards;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const SidebarLink = styled.div`
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+
+  &:hover {
+    color: #ffcc00;
+  }
 `;
 
 function MainPage() {
@@ -98,6 +198,7 @@ function MainPage() {
   const [movies, setMovies] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Debounced fetchMovies function
   const fetchMovies = useCallback(
@@ -125,9 +226,34 @@ function MainPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handleSidebarLinkClick = (path) => {
+    navigate(path);
+    setSidebarOpen(false); // Close the sidebar when a link is clicked
+  };
+
   return (
     <div>
       <GlobalStyle />
+      <MenuIcon onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <div>☰</div>
+      </MenuIcon>
+      <Sidebar isOpen={sidebarOpen}>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/")}>
+          Home
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/popular")}>
+          Popular
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/now-playing")}>
+          Now Playing
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/top-rated")}>
+          Top Rated
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/upcoming")}>
+          Upcoming
+        </SidebarLink>
+      </Sidebar>
       <MainPageContainer>
         <WelcomeMessage>
           {user ? `${user.name}님 환영합니다!` : "환영합니다!"}
@@ -147,7 +273,7 @@ function MainPage() {
           {movies.map((movie) => (
             <Movie
               key={movie.id}
-              onClick={() => navigate(`/movie/${movie.id}`)} // 올바른 경로로 이동하도록 수정
+              onClick={() => navigate(`/movie/${movie.id}`)}
             >
               <MoviePoster
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

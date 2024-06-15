@@ -1,8 +1,28 @@
 import React, { useState, useContext } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../contexts/LoginContext";
 import { UserContext } from "../contexts/UserContext";
+
+// Sidebar slide-in animation
+const slideIn = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+// Sidebar slide-out animation
+const slideOut = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+`;
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +30,7 @@ const Container = styled.div`
   justify-content: center;
   height: 100vh;
   background-color: rgba(15, 9, 59, 0.856);
+  padding: 20px;
 `;
 
 const Form = styled.form`
@@ -21,6 +42,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px;
+    gap: 10px;
+  }
 `;
 
 const Input = styled.input`
@@ -28,6 +55,11 @@ const Input = styled.input`
   border-radius: 30px;
   border: 1px solid #ccc;
   font-size: 16px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 `;
 
 const InputConfirm = styled(Input)`
@@ -54,23 +86,41 @@ const Button = styled.button`
     color: #666;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 `;
 
 const Error = styled.div`
   color: red;
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const Title = styled.h1`
   color: white;
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Message = styled.div`
   color: white;
   text-align: center;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const BoldLink = styled(Link)`
@@ -80,6 +130,54 @@ const BoldLink = styled(Link)`
 
   &:hover {
     text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+const MenuIcon = styled.div`
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+const Sidebar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: rgba(15, 9, 59, 0.856);
+  padding: 20px;
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0)" : "translateX(-100%)"};
+  animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s forwards;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const SidebarLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+
+  &:hover {
+    color: #ffcc00;
   }
 `;
 
@@ -94,13 +192,14 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useContext(LoginContext);
   const { setUser } = useContext(UserContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
       setUserInfo({ name, id, email, age, password });
-      setUser({ name, id }); // Setting user context
+      setUser({ name, id });
       alert("회원가입이 성공적으로 완료되었습니다!");
       navigate("/login");
     } else {
@@ -146,8 +245,33 @@ const SignUpPage = () => {
     password &&
     confirmPassword;
 
+  const handleSidebarLinkClick = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
+  };
+
   return (
     <Container>
+      <MenuIcon onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <div>☰</div>
+      </MenuIcon>
+      <Sidebar isOpen={sidebarOpen}>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/")}>
+          Home
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/popular")}>
+          Popular
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/now-playing")}>
+          Now Playing
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/top-rated")}>
+          Top Rated
+        </SidebarLink>
+        <SidebarLink onClick={() => handleSidebarLinkClick("/upcoming")}>
+          Upcoming
+        </SidebarLink>
+      </Sidebar>
       <Form onSubmit={handleSubmit}>
         <Title>회원가입 페이지</Title>
         <Input

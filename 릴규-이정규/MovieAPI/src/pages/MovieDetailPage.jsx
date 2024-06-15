@@ -9,6 +9,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 `;
 
 const BackgroundImage = styled.div`
@@ -20,6 +22,7 @@ const BackgroundImage = styled.div`
   background-size: cover;
   background-position: center;
   filter: blur(8px);
+  z-index: -1;
 `;
 
 const MovieDetailWrapper = styled.div`
@@ -33,12 +36,32 @@ const MovieDetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 90vw;
+    padding: 5px;
+    gap: 5px;
+  }
 `;
 
 const MovieImage = styled.img`
   align-self: center;
   width: auto;
   height: 300px;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
+
+  @media (max-width: 480px) {
+    height: 150px;
+  }
 `;
 
 const MovieDescription = styled.div`
