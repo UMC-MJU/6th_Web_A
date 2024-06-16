@@ -1,119 +1,124 @@
 import styled from "styled-components";
 import Layout from "../components/Layout";
+import { useForm } from "react-hook-form";
+import { useRef } from "react";
 import SignupInput from "../components/SignupInput";
-import {
-  ageValidator,
-  emailValidator,
-  nameValidator,
-  passwordValidator,
-} from "../utils/validator";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const Background = styled.div`
-  width: 100%;
-  height: calc(100% - 420px);
-  color: white;
+const SignupForm = styled.form`
   display: grid;
   place-items: center;
+  margin: auto;
+  width: 300px;
+  height: 600px;
+  padding: 60px 0px;
+  border-radius: 12px;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
 `;
 
 const Button = styled.button`
-  width: 25vw;
-  height: 40px;
-  border-radius: 8px;
-  margin-top: 24px;
-  text-align: center;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #cccccc;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #cccccc;
+  }
 `;
 
 const SignupPage = () => {
-  const navigate = useNavigate();
+  const {
+    handleSubmit, // form onSubmit에 들어가는 함수
+    register, // onChange 등의 이벤트 객체 생성
+    watch, // register를 통해 받은 모든 값 확인
+    formState: { errors }, // errors: register의 에러 메세지 자동 출력
+  } = useForm();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const password = useRef(); // ref 생성
+  password.current = watch("password");
 
-  const [isNameValidated, setIsNameValidated] = useState(false);
-  const [isEmailValidated, setIsEmailValidated] = useState(false);
-  const [isAgeValidated, setIsAgeValidated] = useState(false);
-  const [isPasswordValidated, setIsPasswordValidated] = useState(false);
-  const [isConfirmPasswordValidated, setIsConfirmPasswordValidated] =
-    useState(false);
-
-  const confirmPasswordValidator = () => {
-    if (password === confirmPassword) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const isFormValidated =
-    isNameValidated &&
-    isEmailValidated &&
-    isAgeValidated &&
-    isPasswordValidated &&
-    isConfirmPasswordValidated;
-
-  const handleClick = () => {
-    console.log({ name, age, email, password });
-    alert("회원가입이 성공했습니다!");
-    navigate("/");
+  const onChangeFormLib = (data) => {
+    console.log("회원가입 정보", data);
   };
 
   return (
     <Layout>
-      <Background>
-        <h2>회원가입 페이지</h2>
-        <form>
-          <SignupInput
-            id="name"
-            label={"이름"}
-            placeholder={"이름을 입력해 주세요."}
-            validator={nameValidator}
-            value={name}
-            onChange={setName}
-            isValidated={setIsNameValidated}
-          />
-          <SignupInput
-            label={"이메일"}
-            placeholder={"이메일을 입력해 주세요."}
-            validator={emailValidator}
-            value={email}
-            onChange={setEmail}
-            isValidated={setIsEmailValidated}
-          />
-          <SignupInput
-            label={"나이"}
-            placeholder={"나이를 입력해 주세요."}
-            validator={ageValidator}
-            value={age}
-            onChange={setAge}
-            isValidated={setIsAgeValidated}
-          />
-          <SignupInput
-            label={"비밀번호"}
-            placeholder={"비밀번호를 입력해 주세요."}
-            validator={passwordValidator}
-            value={password}
-            onChange={setPassword}
-            isValidated={setIsPasswordValidated}
-          />
-          <SignupInput
-            label={"비밀번호 확인"}
-            placeholder={"비밀번호를 확인해 주세요."}
-            validator={confirmPasswordValidator}
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-            isValidated={setIsConfirmPasswordValidated}
-          />
-        </form>
-        <Button disabled={!isFormValidated} onClick={handleClick}>
-          제출하기
-        </Button>
-      </Background>
+      <SignupForm onSubmit={handleSubmit(onChangeFormLib)}>
+        <SignupInput
+          label="이름"
+          name="name"
+          type="text"
+          register={register}
+          errors={errors}
+          required={true}
+        />
+        <SignupInput
+          label="아이디"
+          name="username"
+          type="text"
+          register={register}
+          errors={errors}
+          required={true}
+        />
+        <SignupInput
+          label="이메일"
+          name="email"
+          type="email"
+          register={register}
+          errors={errors}
+          required={true}
+          pattern={{
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+            message: "유효한 이메일 주소를 입력해주세요",
+          }}
+        />
+        <SignupInput
+          label="나이"
+          name="age"
+          type="number"
+          register={register}
+          errors={errors}
+          required={true}
+          min={{ value: 0, message: "나이는 0보다 커야합니다" }}
+        />
+        <SignupInput
+          label="비밀번호"
+          name="password"
+          type="password"
+          register={register}
+          errors={errors}
+          required={true}
+          minLength={{
+            value: 8,
+            message: "비밀번호 길이를 8자리 이상 입력해주세요",
+          }}
+        />
+        <SignupInput
+          label="비밀번호 확인"
+          name="passwordConfirm"
+          type="password"
+          register={register}
+          errors={errors}
+          required={true}
+          validate={(value) =>
+            value === password.current || "비밀번호가 일치하지 않습니다"
+          }
+        />
+        <Button type="submit">제출하기</Button>
+      </SignupForm>
     </Layout>
   );
 };
