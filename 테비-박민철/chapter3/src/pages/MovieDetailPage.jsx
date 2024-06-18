@@ -69,8 +69,8 @@ const MovieDetailPage = () => {
     return "⭐️".repeat(count);
   };
 
-  const credits = getCreditData(element.id);
-  const casts = credits?.movieData?.cast;
+  // const credits = getCreditData(element?.id);
+  // const casts = credits?.movieData?.cast;
 
   return (
     <>

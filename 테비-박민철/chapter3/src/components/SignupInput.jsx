@@ -8,6 +8,7 @@ const InputWrapper = styled.div`
 `;
 
 const Label = styled.label`
+  color: white;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 8px;
