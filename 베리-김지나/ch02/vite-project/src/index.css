@@ -1,0 +1,170 @@
+body {
+  margin: 0;
+}
+
+.modal-wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  width: 320px;
+  padding: 24px 16px;
+  border-radius: 4px;
+}
+
+.modal-title {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.btn-wrapper {
+  text-align: right;
+}
+
+.todo-list {
+  padding: 0;
+  background-color: #f4f8ff;
+  height: 100vh;
+}
+
+.todo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-title {
+  width: 800px;
+  border-bottom: 2px solid rgb(215, 215, 215);
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-content {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
+
+#input {
+  width: 600px;
+  height: 40px;
+  border: 2px solid black;
+}
+
+#input::placeholder {
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.contents-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 650px;
+}
+
+.todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+}
+
+.whattodo {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.whattodo h3 {
+  border-bottom: 2px solid rgb(215, 215, 215);
+}
+.whatdid {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.whatdid h3 {
+  border-bottom: 2px solid rgb(215, 215, 215);
+}
+
+.movie-list {
+  width: 100vw;
+  background-color: rgb(35, 38, 73);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 30px;
+  gap: 10px;
+}
+
+.movie-card {
+  width: 300px;
+  height: 500px;
+  display: inline-block;
+  position: relative;
+}
+
+.movie-card img {
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.movie-card:hover img {
+  opacity: 0.3;
+}
+
+.description {
+  color: white;
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  background-color: rgb(57, 68, 119);
+}
+
+.movie-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 280px;
+  height: 480px;
+  color: white;
+  display: flex;
+  opacity: 0; /* 기본적으로 숨김 */
+  transition: opacity 0.2s ease;
+  padding: 10px;
+}
+.movie-card:hover .movie-info {
+  opacity: 1;
+}
+
+.movie-details {
+  padding: 20px;
+  max-width: 100%;
+  max-height: 70%;
+  text-overflow: ellipsis;
+}
