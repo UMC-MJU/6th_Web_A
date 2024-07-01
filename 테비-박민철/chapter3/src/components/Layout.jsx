@@ -12,6 +12,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   flex: 1;
+  overflow-y: scroll;
 `;
 
 const Background = styled.div`

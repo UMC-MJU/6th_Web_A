@@ -4,16 +4,17 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ToggleProvider } from "./utils/contexts/ToggleContext.jsx";
-import { SignupFormProvider } from "./utils/contexts/SignupFormContext.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ToggleProvider>
-        <SignupFormProvider>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ToggleProvider>
           <App />
-        </SignupFormProvider>
-      </ToggleProvider>
-    </BrowserRouter>
+        </ToggleProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 );
