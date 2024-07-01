@@ -1,14 +1,12 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   extends: [
-    "airbnb",
-    "airbnb/hooks",
+    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
     "prettier",
+    "plugin:prettier/recommended",
   ],
-  plugins: ["react", "@typescript-eslint", "prettier"],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
@@ -22,20 +20,16 @@ module.exports = {
     },
   },
   rules: {
-    "prettier/prettier": "error",
-    "react/jsx-filename-extension": [1, { extensions: [".jsx", ".tsx"] }], // Allow JSX in .tsx files
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        ts: "never",
-        tsx: "never",
-      },
-    ],
-    "import/no-unresolved": "off",
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react/react-in-jsx-scope": "off", // React 17+ JSX Transform
-    "react/jsx-uses-react": "off", // React 17+ JSX Transform
-    "react/function-component-definition": "off",
   },
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"],
+      rules: {
+        "@typescript-eslint/explicit-function-return-type": ["error"],
+      },
+    },
+  ],
 };

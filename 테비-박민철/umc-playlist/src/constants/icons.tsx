@@ -1,4 +1,6 @@
-export const CartIcon = () => {
+import React, { ReactNode } from "react";
+
+export const CartIcon = (): ReactNode => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +19,7 @@ export const CartIcon = () => {
   );
 };
 
-export const ChevronDown = () => {
+export const ChevronDown = (): ReactNode => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +34,7 @@ export const ChevronDown = () => {
   );
 };
 
-export const ChevronUp = () => {
+export const ChevronUp = (): ReactNode => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
