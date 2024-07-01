@@ -37,5 +37,6 @@ module.exports = {
     "react/react-in-jsx-scope": "off", // React 17+ JSX Transform
     "react/jsx-uses-react": "off", // React 17+ JSX Transform
     "react/no-absolute-path": "off",
+    "react/function-component-definition": "off",
   },
 };
