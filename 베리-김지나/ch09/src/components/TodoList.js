@@ -11,8 +11,6 @@ export default function TodoList() {
 
   const trash = <FontAwesomeIcon icon={faTrashCan} />;
 
-  console.log(todolist);
-
   const todolistView = todolist.map((todo, idx) => (
     <li className={s.list} key={todolist[idx].id}>
       <input
@@ -34,8 +32,8 @@ export default function TodoList() {
   ));
 
   return (
-    <>
+    <div className={s.todoListContainer}>
       <ul>{todolistView}</ul>
-    </>
+    </div>
   );
 }

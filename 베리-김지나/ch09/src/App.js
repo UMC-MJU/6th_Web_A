@@ -1,9 +1,11 @@
-import "./App.css";
+import React from "react";
+import InputTodo from "./components/InputTodo";
 import TodoList from "./components/TodoList";
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <InputTodo />
       <TodoList />
     </div>
   );

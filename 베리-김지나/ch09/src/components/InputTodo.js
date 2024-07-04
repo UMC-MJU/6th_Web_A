@@ -20,7 +20,7 @@ export default function InputTodo() {
   }
 
   return (
-    <div className={s.InputTodo}>
+    <div className={s.inputTodo}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -30,14 +30,14 @@ export default function InputTodo() {
           onReset();
         }}
       >
-        <div>
+        <div className={s.formGroup}>
           <input
             className={s.textbar}
             type="text"
             value={todolist.text}
             onChange={handleText}
-          ></input>
-          <input className={s.submitbutton} type="submit" value="+"></input>
+          />
+          <input className={s.submitbutton} type="submit" value="+" />
         </div>
       </form>
     </div>

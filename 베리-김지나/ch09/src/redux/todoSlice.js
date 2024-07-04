@@ -28,5 +28,5 @@ export const todoSlice = createSlice({
 });
 
 export const { add, remove, complete } = todoSlice.actions;
-//store에서 add, remove, complte 액션을 내보낸다.
+//store에서 add, remove, complete 액션을 내보낸다.
 export default todoSlice.reducer;
