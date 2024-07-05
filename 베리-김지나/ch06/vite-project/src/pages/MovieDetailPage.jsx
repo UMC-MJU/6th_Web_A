@@ -11,12 +11,17 @@ const MovieDetailPage = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   console.log(id);
-
   useEffect(() => {
     const fetchMovie = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/search/movie?query=${id}&api_key=${API_KEY}&language=ko-KR`
+          `https://api.themoviedb.org/3/movie/${id}`,
+          {
+            params: {
+              api_key: API_KEY,
+              language: "ko-KR",
+            },
+          }
         );
         setMovie(response.data);
       } catch (error) {
@@ -28,6 +33,25 @@ const MovieDetailPage = () => {
 
     fetchMovie();
   }, [id]);
+
+  //   useEffect(() => {
+  //     const fetchMovie = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           `https://api.themoviedb.org/3/movie?query=${id}&api_key=${API_KEY}&language=ko-KR`
+
+  //           //   `https://api.themoviedb.org/3/search/movie?query=${id}&api_key=${API_KEY}&language=ko-KR`
+  //         );
+  //         setMovie(response.data);
+  //       } catch (error) {
+  //         console.error("영화 정보를 가져오는 중 오류가 발생했습니다.", error);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
+
+  //     fetchMovie();
+  //   }, [id]);
 
   if (loading) {
     return <p>로딩 중...</p>;

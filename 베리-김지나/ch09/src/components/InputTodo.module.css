@@ -1,0 +1,29 @@
+.inputTodo {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+}
+
+.textbar {
+  width: 300px;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.submitbutton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
